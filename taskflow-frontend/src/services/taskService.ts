@@ -1,7 +1,7 @@
 import axios from "axios";
 import type { Task, CreateTaskDto, UpdateTaskDto } from "../types/task";
 
-const API_BASE_URL = "http://localhost:5282/api";
+const API_BASE_URL = "https://taskflow-api-3qsm.onrender.com/api";
 
 const api = axios.create({
   baseURL: API_BASE_URL,
