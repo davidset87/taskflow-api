@@ -9,9 +9,14 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-// Database
+var isProduction = builder.Environment.IsProduction();
 builder.Services.AddDbContext<TaskFlowDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+{
+    if (isProduction)
+        options.UseSqlite("Data Source=taskflow.db");
+    else
+        options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+});
 
 // Services
 builder.Services.AddScoped<ITaskService, TaskService>();
@@ -29,13 +34,9 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+app.UseSwagger();
+app.UseSwaggerUI();
 
-app.UseHttpsRedirection();
 app.UseCors("AllowFrontend");
 app.MapControllers();
 
@@ -43,7 +44,7 @@ app.MapControllers();
 using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<TaskFlowDbContext>();
-    db.Database.Migrate();
+    db.Database.EnsureCreated();
 }
 
 app.Run();
