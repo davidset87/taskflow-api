@@ -5,7 +5,9 @@ Full-stack task management application built with ASP.NET Core and React.
 ## Live Demo
 🔗 **App:** https://taskflow-frontend-rwyk.onrender.com  
 🔗 **API (Swagger):** https://taskflow-api-3qsm.onrender.com/swagger
+🔗 **API on Azure (Swagger):** https://taskflow-api-david.azurewebsites.net/swagger
 
+> Deployed on **Azure App Service** (Linux, .NET 10) with an automated **GitHub Actions** pipeline: build, unit tests, then deploy via federated identity (OIDC).
 > ⚠️ First load may take up to 60 seconds (free tier cold start).
 
 ## Features
